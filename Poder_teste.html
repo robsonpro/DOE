@@ -103,13 +103,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="poder-do-teste-e-tamanho-amostral" class="level2">
-<h2 class="anchored" data-anchor-id="poder-do-teste-e-tamanho-amostral">Poder do teste e tamanho amostral</h2>
+<section id="carregando-pacotes" class="level2">
+<h2 class="anchored" data-anchor-id="carregando-pacotes">Carregando pacotes</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="teste-de-hipóteses-para-média-de-uma-amostra" class="level3">
-<h3 class="anchored" data-anchor-id="teste-de-hipóteses-para-média-de-uma-amostra">Teste de hipóteses para média de uma amostra</h3>
+</section>
+<section id="teste-de-hipóteses-para-média-de-uma-amostra" class="level2">
+<h2 class="anchored" data-anchor-id="teste-de-hipóteses-para-média-de-uma-amostra">Teste de hipóteses para média de uma amostra</h2>
 <p>Seja uma amostra de diâmetro de 12 furos obtidos por furação com broca em peça de aço inox ABNT 304.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>diametro <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">10.673</span>, <span class="fl">11.118</span>, <span class="fl">10.944</span>, <span class="fl">10.537</span>,</span>
@@ -122,8 +123,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Deseja-se averiguar se o diâmetro médio é maior que 10.6 mm.</p>
-<p>Hipoteses: - H0: <span class="math inline">\(\mu\)</span> = 10.6 (hipotese nula) - H1: <span class="math inline">\(\mu\)</span> &gt; 10.6 (hupotese alternativa)</p>
-<p>Realizando o teste t.</p>
+<section id="hipoteses" class="level3">
+<h3 class="anchored" data-anchor-id="hipoteses">Hipoteses:</h3>
+<ul>
+<li><p>H0: <span class="math inline">\(\mu\)</span> = 10.6 (hipotese nula)</p></li>
+<li><p>H1: <span class="math inline">\(\mu\)</span> &gt; 10.6 (hupotese alternativa)</p></li>
+</ul>
+</section>
+<section id="realizando-o-teste-t." class="level3">
+<h3 class="anchored" data-anchor-id="realizando-o-teste-t.">Realizando o teste t.</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(diametro, <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="fl">10.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

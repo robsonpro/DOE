@@ -101,16 +101,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="anova-para-um-fator" class="level2">
-<h2 class="anchored" data-anchor-id="anova-para-um-fator">ANOVA para um fator</h2>
-<p>Pacotes.</p>
+<section id="carregando-pacotes." class="level2">
+<h2 class="anchored" data-anchor-id="carregando-pacotes.">Carregando Pacotes.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ScottKnott)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Três tipos de revestimentos metálicos foram aplicados via aspersão térmica em corpos de prova tubulares para uso em caldeiras. Os tipos de revestimento sao Alumínio, inox 308 e inconel 625. Ensaios de corrosão acelerada em uma câmara de dióxido de enxofre foram realizados. Os resultados de ganho de massa em gramas foram medidos apos 72h. Foram realizadas 8 replicações para cada tratamento. Teste se há diferença entre os revestimentos.</p>
-<section id="planejamento-e-resultados" class="level3">
-<h3 class="anchored" data-anchor-id="planejamento-e-resultados">Planejamento e resultados</h3>
+</section>
+<section id="planejamento-e-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="planejamento-e-resultados">Planejamento e resultados</h2>
 <p>Dados de ganho de massa.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Al <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.788</span>, <span class="fl">0.878</span>, <span class="fl">0.804</span>, <span class="fl">0.806</span>, <span class="fl">0.886</span>, <span class="fl">0.823</span>,</span>
@@ -154,8 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(planejamento, <span class="st">"planejamento.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="gráficos" class="level3">
-<h3 class="anchored" data-anchor-id="gráficos">Gráficos</h3>
+<section id="gráficos" class="level2">
+<h2 class="anchored" data-anchor-id="gráficos">Gráficos</h2>
 <p>Box-plot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(planejamento,</span>
@@ -190,8 +190,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="anova" class="level3">
-<h3 class="anchored" data-anchor-id="anova">ANOVA</h3>
+<section id="anova" class="level2">
+<h2 class="anchored" data-anchor-id="anova">ANOVA</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res.anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(ganho <span class="sc">~</span> revestimento,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> planejamento)</span>
@@ -237,8 +237,8 @@ F-statistic: 291.1 on 2 and 21 DF,  p-value: 4.888e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="região-crítica" class="level3">
-<h3 class="anchored" data-anchor-id="região-crítica">Região crítica</h3>
+<section id="região-crítica" class="level2">
+<h2 class="anchored" data-anchor-id="região-crítica">Região crítica</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">7</span>,<span class="at">length=</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -271,8 +271,8 @@ F-statistic: 291.1 on 2 and 21 DF,  p-value: 4.888e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="pressuposições" class="level3">
-<h3 class="anchored" data-anchor-id="pressuposições">Pressuposições</h3>
+<section id="pressuposições" class="level2">
+<h2 class="anchored" data-anchor-id="pressuposições">Pressuposições</h2>
 <p>Normalidade.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(res.anova))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -306,8 +306,8 @@ Bartlett's K-squared = 0.72359, df = 2, p-value = 0.6964</code></pre>
 </div>
 </div>
 </section>
-<section id="testes-de-comparações-múltiplas-testes-de-comparações-de-médias-ou-ad-hoc" class="level3">
-<h3 class="anchored" data-anchor-id="testes-de-comparações-múltiplas-testes-de-comparações-de-médias-ou-ad-hoc">Testes de comparações múltiplas (testes de comparações de médias ou Ad-hoc)</h3>
+<section id="testes-de-comparações-múltiplas-testes-de-comparações-de-médias-ou-ad-hoc" class="level2">
+<h2 class="anchored" data-anchor-id="testes-de-comparações-múltiplas-testes-de-comparações-de-médias-ou-ad-hoc">Testes de comparações múltiplas (testes de comparações de médias ou Ad-hoc)</h2>
 <p>Teste de Tukey.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(res.anova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -361,7 +361,6 @@ Clusters
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(sk1)</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot(sk1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 </section>
 
 </main>

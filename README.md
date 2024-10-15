@@ -9,3 +9,9 @@ https://robsonpro.github.io/DOE/Poder_teste.html
 ### Planejamento totalmente aleatorizado e análise de variância para um fator
 
 https://robsonpro.github.io/DOE/ANOVA_one_way.html
+
+### Planejamento fatorial 2^k
+
+https://robsonpro.github.io/DOE/Fatorial2_2
+
+https://robsonpro.github.io/DOE/Fatorial2_3

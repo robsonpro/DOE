@@ -15,3 +15,16 @@ https://robsonpro.github.io/DOE/ANOVA_one_way.html
 https://robsonpro.github.io/DOE/Fatorial2_2
 
 https://robsonpro.github.io/DOE/Fatorial2_3
+
+### Blocagem no fatorial 2^k
+
+https://robsonpro.github.io/DOE/Fatorial_com_bloco.html
+
+### Fatorial não replicado
+
+https://robsonpro.github.io/DOE/Fatorial_nao_replicado.html
+
+### Fatorial fracionado 2^(k-p)
+
+https://robsonpro.github.io/DOE/Fatorial_frac_2_k-p.html
+

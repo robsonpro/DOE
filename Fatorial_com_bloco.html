@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Robson Bruno Dutra Pereira">
+
+<title>Blocagem no fatorial 2^k</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Fatorial_com_bloco_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Fatorial_com_bloco_files/libs/quarto-html/quarto.js"></script>
+<script src="Fatorial_com_bloco_files/libs/quarto-html/popper.min.js"></script>
+<script src="Fatorial_com_bloco_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Fatorial_com_bloco_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Fatorial_com_bloco_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Fatorial_com_bloco_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Fatorial_com_bloco_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Fatorial_com_bloco_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Fatorial_com_bloco_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Blocagem no fatorial 2^k</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Robson Bruno Dutra Pereira </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="blocagem-na-replicação-no-fatorial-2k" class="level2">
+<h2 class="anchored" data-anchor-id="blocagem-na-replicação-no-fatorial-2k">Blocagem na replicação no fatorial 2^k</h2>
+<section id="fatorial-22-com-b3-blocos" class="level3">
+<h3 class="anchored" data-anchor-id="fatorial-22-com-b3-blocos">fatorial 2^2 com b=3 blocos</h3>
+<p>Planejamento.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plan <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x1 =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x2 =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plan <span class="ot">&lt;-</span> <span class="fu">rbind</span>(plan,plan,plan)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plan<span class="sc">$</span>bloco <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">4</span>),<span class="fu">rep</span>(<span class="dv">2</span>,<span class="dv">4</span>),<span class="fu">rep</span>(<span class="dv">3</span>,<span class="dv">4</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Adicionado resposta.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plan<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">44</span>,   <span class="fl">54.8</span>, <span class="fl">29.5</span>, <span class="fl">48.9</span>,   <span class="co"># bloco 1 (operador 1)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>            <span class="fl">35.5</span>, <span class="dv">46</span>,   <span class="fl">26.5</span>, <span class="dv">43</span>,     <span class="co"># bloco 2 (operador 2)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>            <span class="fl">40.5</span>, <span class="dv">48</span>,   <span class="fl">34.5</span>, <span class="fl">45.5</span>)   <span class="co"># bloco 3 (operador 3)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>plan</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x1 x2 bloco    y
+1  -1 -1     1 44.0
+2   1 -1     1 54.8
+3  -1  1     1 29.5
+4   1  1     1 48.9
+5  -1 -1     2 35.5
+6   1 -1     2 46.0
+7  -1  1     2 26.5
+8   1  1     2 43.0
+9  -1 -1     3 40.5
+10  1 -1     3 48.0
+11 -1  1     3 34.5
+12  1  1     3 45.5</code></pre>
+</div>
+</div>
+<p>Análise com bloco.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1<span class="sc">*</span>x2 <span class="sc">+</span> bloco, plan)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x1 * x2 + bloco, data = plan)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.5750 -0.9021  0.0083  0.9042  3.6000 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  44.3000     1.2948  34.214 4.15e-08 ***
+x1            6.3083     0.7475   8.439 0.000151 ***
+x2           -3.4083     0.7475  -4.559 0.003853 ** 
+bloco2       -6.5500     1.8311  -3.577 0.011684 *  
+bloco3       -2.1750     1.8311  -1.188 0.279792    
+x1:x2         1.5083     0.7475   2.018 0.090184 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.59 on 6 degrees of freedom
+Multiple R-squared:  0.948, Adjusted R-squared:  0.9046 
+F-statistic: 21.87 on 5 and 6 DF,  p-value: 0.0008701</code></pre>
+</div>
+</div>
+</section>
+<section id="planejamento-e-análise-via-pacote-frf2" class="level3">
+<h3 class="anchored" data-anchor-id="planejamento-e-análise-via-pacote-frf2">Planejamento e análise via pacote FrF2</h3>
+<p>Carregando pacote.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FrF2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Planejamento e resposta.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plan2 <span class="ot">&lt;-</span> <span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">4</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">nfactors =</span> <span class="dv">2</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">replications =</span> <span class="dv">3</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">factor.names =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">randomize =</span> F)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plan2<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">44</span>,   <span class="fl">54.8</span>, <span class="fl">29.5</span>, <span class="fl">48.9</span>,   <span class="co"># bloco 1 (operador 1)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>             <span class="fl">35.5</span>, <span class="dv">46</span>,   <span class="fl">26.5</span>, <span class="dv">43</span>,     <span class="co"># bloco 2 (operador 2)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>             <span class="fl">40.5</span>, <span class="dv">48</span>,   <span class="fl">34.5</span>, <span class="fl">45.5</span>)   <span class="co"># bloco 3 (operador 3)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(plan2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+FrF2(nruns = 4, nfactors = 2, replications = 3, factor.names = c("x1", 
+    "x2"), randomize = F)
+
+Experimental design of type  full factorial 
+4  runs
+each run independently conducted  3  times
+
+Factor settings:
+  x1 x2
+1 -1 -1
+2  1  1
+
+The design itself:
+   run.no run.no.std.rp x1 x2 Blocks    y
+1       1           1.1 -1 -1     .1 44.0
+2       2           2.1  1 -1     .1 54.8
+3       3           3.1 -1  1     .1 29.5
+4       4           4.1  1  1     .1 48.9
+5       5           1.2 -1 -1     .2 35.5
+6       6           2.2  1 -1     .2 46.0
+7       7           3.2 -1  1     .2 26.5
+8       8           4.2  1  1     .2 43.0
+9       9           1.3 -1 -1     .3 40.5
+10     10           2.3  1 -1     .3 48.0
+11     11           3.3 -1  1     .3 34.5
+12     12           4.3  1  1     .3 45.5
+class=design, type= full factorial 
+NOTE: columns run.no and run.no.std.rp  are annotation, 
+ not part of the data frame</code></pre>
+</div>
+</div>
+<p>Análise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1<span class="sc">*</span>x2 <span class="sc">+</span> Blocks, plan2)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm.default(formula = y ~ x1 * x2 + Blocks, data = plan2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.5750 -0.9021  0.0083  0.9042  3.6000 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  44.3000     1.2948  34.214 4.15e-08 ***
+x11           6.3083     0.7475   8.439 0.000151 ***
+x21          -3.4083     0.7475  -4.559 0.003853 ** 
+Blocks.2     -6.5500     1.8311  -3.577 0.011684 *  
+Blocks.3     -2.1750     1.8311  -1.188 0.279792    
+x11:x21       1.5083     0.7475   2.018 0.090184 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.59 on 6 degrees of freedom
+Multiple R-squared:  0.948, Adjusted R-squared:  0.9046 
+F-statistic: 21.87 on 5 and 6 DF,  p-value: 0.0008701</code></pre>
+</div>
+</div>
+<p>ANOVA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>anova1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(lm2)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+x1           1  477.5   477.5  71.213 0.000151 ***
+x2           1  139.4   139.4  20.788 0.003853 ** 
+Blocks       2   89.0    44.5   6.638 0.030155 *  
+x1:x2        1   27.3    27.3   4.071 0.090184 .  
+Residuals    6   40.2     6.7                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Análise sem bloco.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1<span class="sc">*</span>x2, plan2)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm.default(formula = y ~ x1 * x2, data = plan2)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5000 -3.0000 -0.4833  3.3250  5.2000 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   41.392      1.160  35.670 4.18e-10 ***
+x11            6.308      1.160   5.436 0.000619 ***
+x21           -3.408      1.160  -2.937 0.018790 *  
+x11:x21        1.508      1.160   1.300 0.229856    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.02 on 8 degrees of freedom
+Multiple R-squared:  0.8329,    Adjusted R-squared:  0.7702 
+F-statistic: 13.29 on 3 and 8 DF,  p-value: 0.001786</code></pre>
+</div>
+</div>
+<p>ANOVA sem bloco.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>anova2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(lm3)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+x1           1  477.5   477.5  29.554 0.000619 ***
+x2           1  139.4   139.4   8.627 0.018790 *  
+x1:x2        1   27.3    27.3   1.690 0.229856    
+Residuals    8  129.3    16.2                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Pressuposições.</p>
+<p>Normalidade.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(lm1<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  lm1$residuals
+W = 0.97888, p-value = 0.9788</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Fatorial_com_bloco_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Homocedasticidade.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ols_test_breusch_pagan</span>(lm1, <span class="at">rhs =</span> T, <span class="at">multiple =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Breusch Pagan Test for Heteroskedasticity
+ -----------------------------------------
+ Ho: the variance is constant            
+ Ha: the variance is not constant        
+
+                Data                 
+ ------------------------------------
+ Response : y 
+ Variables: x1 x2 bloco2 bloco3 x1:x2 
+
+        Test Summary (Unadjusted p values)       
+ ----------------------------------------------
+  Variable           chi2       df        p     
+ ----------------------------------------------
+  x1               0.8578118     1    0.3543518 
+  x2               0.8198981     1    0.3652100 
+  bloco2           2.3873751     1    0.1223189 
+  bloco3           0.6236611     1    0.4296900 
+  x1:x2            3.9494102     1    0.0468878 
+ ----------------------------------------------
+  simultaneous     8.0148880     5    0.1554170 
+ ----------------------------------------------</code></pre>
+</div>
+</div>
+<p>Previsão.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lm1, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fl">0.5</span>, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">x2 =</span> <span class="dv">0</span>, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">bloco =</span> <span class="st">"1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+47.45417 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="blocagem-com-confundimento-no-fatorial-2k" class="level2">
+<h2 class="anchored" data-anchor-id="blocagem-com-confundimento-no-fatorial-2k">Blocagem com confundimento no fatorial 2^k</h2>
+<section id="fatorial-24-nao-replicado-com-bloco-em-dois-níveis" class="level3">
+<h3 class="anchored" data-anchor-id="fatorial-24-nao-replicado-com-bloco-em-dois-níveis">Fatorial 2^4 nao replicado com bloco em dois níveis</h3>
+<p>Planejamento.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x1=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x2=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x3=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x4=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Coluna da variavel blocada - matéria-prima: fornecedor A (-1), fornecedor B (+1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>design<span class="sc">$</span>bloco <span class="ot">&lt;-</span> <span class="fu">with</span>(design, x1<span class="sc">*</span>x2<span class="sc">*</span>x3<span class="sc">*</span>x4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Resposta.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>design<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">58.5</span>,  <span class="fl">92.3</span>, <span class="fl">62.4</span>,  <span class="fl">84.5</span>, <span class="fl">88.4</span>,  <span class="fl">78.0</span>, <span class="fl">104.0</span>,  <span class="fl">84.5</span>,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>              <span class="fl">55.9</span>, <span class="fl">130.0</span>, <span class="fl">58.5</span>, <span class="fl">135.2</span>, <span class="fl">97.5</span>, <span class="fl">111.8</span>,  <span class="fl">91.0</span>, <span class="fl">124.8</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>design</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x1 x2 x3 x4 bloco     y
+1  -1 -1 -1 -1     1  58.5
+2   1 -1 -1 -1    -1  92.3
+3  -1  1 -1 -1    -1  62.4
+4   1  1 -1 -1     1  84.5
+5  -1 -1  1 -1    -1  88.4
+6   1 -1  1 -1     1  78.0
+7  -1  1  1 -1     1 104.0
+8   1  1  1 -1    -1  84.5
+9  -1 -1 -1  1    -1  55.9
+10  1 -1 -1  1     1 130.0
+11 -1  1 -1  1     1  58.5
+12  1  1 -1  1    -1 135.2
+13 -1 -1  1  1     1  97.5
+14  1 -1  1  1    -1 111.8
+15 -1  1  1  1    -1  91.0
+16  1  1  1  1     1 124.8</code></pre>
+</div>
+</div>
+<p>Análise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>lm1_ <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span>x1<span class="sc">*</span>x2<span class="sc">*</span>x3<span class="sc">*</span>x4 <span class="sc">+</span> bloco, design)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm.default(formula = y ~ x1 * x2 * x3 * x4 + bloco, data = design)
+
+Residuals:
+ALL 16 residuals are 0: no residual degrees of freedom!
+
+Coefficients: (1 not defined because of singularities)
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  91.08125        NaN     NaN      NaN
+x1           14.05625        NaN     NaN      NaN
+x2            2.03125        NaN     NaN      NaN
+x3            6.41875        NaN     NaN      NaN
+x4            9.50625        NaN     NaN      NaN
+bloco         0.89375        NaN     NaN      NaN
+x1:x2         0.08125        NaN     NaN      NaN
+x1:x3       -11.78125        NaN     NaN      NaN
+x2:x3         1.54375        NaN     NaN      NaN
+x1:x4        10.80625        NaN     NaN      NaN
+x2:x4        -0.24375        NaN     NaN      NaN
+x3:x4        -0.73125        NaN     NaN      NaN
+x1:x2:x3      1.21875        NaN     NaN      NaN
+x1:x2:x4      2.68125        NaN     NaN      NaN
+x1:x3:x4     -1.05625        NaN     NaN      NaN
+x2:x3:x4     -1.70625        NaN     NaN      NaN
+x1:x2:x3:x4        NA         NA      NA       NA
+
+Residual standard error: NaN on 0 degrees of freedom
+Multiple R-squared:      1, Adjusted R-squared:    NaN 
+F-statistic:   NaN on 15 and 0 DF,  p-value: NA</code></pre>
+</div>
+</div>
+<p>Via FrF2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>design2 <span class="ot">&lt;-</span> <span class="fu">FrF2</span>(<span class="at">nruns =</span> <span class="dv">16</span>,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">nfactors =</span> <span class="dv">4</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">factor.names =</span> <span class="fu">c</span>(<span class="st">"x1"</span>,<span class="st">"x2"</span>,<span class="st">"x3"</span>,<span class="st">"x4"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">blocks =</span> <span class="dv">2</span>, </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">randomize =</span> F)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(design2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+FrF2(nruns = 16, nfactors = 4, factor.names = c("x1", "x2", "x3", 
+    "x4"), blocks = 2, randomize = F)
+
+Experimental design of type  FrF2.blocked 
+16  runs
+blocked design with  2  blocks of size  8 
+
+Factor settings (scale ends):
+  x1 x2 x3 x4
+1 -1 -1 -1 -1
+2  1  1  1  1
+
+Design generating information:
+$legend
+[1] A=x1 B=x2 C=x3 D=x4
+
+$`generators for design itself`
+[1] full factorial
+
+$`block generators`
+[1] 15
+
+
+no aliasing of main effects or 2fis  among experimental factors
+
+Aliased with block main effects:
+[1] none
+
+The design itself:
+  run.no run.no.std.rp Blocks x1 x2 x3 x4
+1      1         2.1.1      1 -1 -1 -1  1
+2      2         3.1.2      1 -1 -1  1 -1
+3      3         5.1.3      1 -1  1 -1 -1
+4      4         8.1.4      1 -1  1  1  1
+5      5         9.1.5      1  1 -1 -1 -1
+6      6        12.1.6      1  1 -1  1  1
+7      7        14.1.7      1  1  1 -1  1
+8      8        15.1.8      1  1  1  1 -1
+   run.no run.no.std.rp Blocks x1 x2 x3 x4
+9       9         1.2.1      2 -1 -1 -1 -1
+10     10         4.2.2      2 -1 -1  1  1
+11     11         6.2.3      2 -1  1 -1  1
+12     12         7.2.4      2 -1  1  1 -1
+13     13        10.2.5      2  1 -1 -1  1
+14     14        11.2.6      2  1 -1  1 -1
+15     15        13.2.7      2  1  1 -1 -1
+16     16        16.2.8      2  1  1  1  1
+class=design, type= FrF2.blocked 
+NOTE: columns run.no and run.no.std.rp  are annotation, 
+ not part of the data frame</code></pre>
+</div>
+</div>
+<p>Resposta (cuidado com a ordem, distinta da anterior).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>design2<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">55.9</span>,<span class="fl">88.4</span>,<span class="fl">62.4</span>,<span class="fl">91.0</span>,<span class="fl">92.3</span>,<span class="fl">111.8</span>,<span class="fl">135.2</span>,<span class="fl">84.5</span>, <span class="co"># bloco 1</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>               <span class="fl">58.5</span>,<span class="fl">97.5</span>,<span class="fl">58.5</span>,<span class="fl">104.0</span>,<span class="fl">130.0</span>,<span class="fl">78.0</span>,<span class="fl">84.5</span>,<span class="fl">124.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Análise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>lm2_ <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span>x1<span class="sc">*</span>x2<span class="sc">*</span>x3<span class="sc">*</span>x4 <span class="sc">+</span> Blocks, design2)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm2_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm.default(formula = y ~ x1 * x2 * x3 * x4 + Blocks, data = design2)
+
+Residuals:
+ALL 16 residuals are 0: no residual degrees of freedom!
+
+Coefficients: (1 not defined because of singularities)
+                 Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)      91.08125        NaN     NaN      NaN
+x11              14.05625        NaN     NaN      NaN
+x21               2.03125        NaN     NaN      NaN
+x31               6.41875        NaN     NaN      NaN
+x41               9.50625        NaN     NaN      NaN
+Blocks1           0.89375        NaN     NaN      NaN
+x11:x21           0.08125        NaN     NaN      NaN
+x11:x31         -11.78125        NaN     NaN      NaN
+x21:x31           1.54375        NaN     NaN      NaN
+x11:x41          10.80625        NaN     NaN      NaN
+x21:x41          -0.24375        NaN     NaN      NaN
+x31:x41          -0.73125        NaN     NaN      NaN
+x11:x21:x31       1.21875        NaN     NaN      NaN
+x11:x21:x41       2.68125        NaN     NaN      NaN
+x11:x31:x41      -1.05625        NaN     NaN      NaN
+x21:x31:x41      -1.70625        NaN     NaN      NaN
+x11:x21:x31:x41        NA         NA      NA       NA
+
+Residual standard error: NaN on 0 degrees of freedom
+Multiple R-squared:      1, Adjusted R-squared:    NaN 
+F-statistic:   NaN on 15 and 0 DF,  p-value: NA</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

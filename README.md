@@ -28,3 +28,10 @@ https://robsonpro.github.io/DOE/Fatorial_nao_replicado.html
 
 https://robsonpro.github.io/DOE/Fatorial_frac_2_k-p.html
 
+### Fatorial com pontos centrais
+
+https://robsonpro.github.io/DOE/Fatctpt.html
+
+### Metodologia de superfície de resposta
+
+https://robsonpro.github.io/DOE/RSM.html
